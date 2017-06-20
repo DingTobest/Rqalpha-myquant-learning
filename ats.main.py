@@ -36,7 +36,7 @@ def batchExec(strategyName):
 
 if __name__ == '__main__':
     # 策略执行方式："singal"-执行单个策略，"batch"-批量执行策略，"download"-下载日线数据
-    execFlag = "batch"
+    execFlag = "singal"
 
     if execFlag == "singal":
         # 单个执行回测

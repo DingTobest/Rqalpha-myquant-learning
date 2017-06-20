@@ -11,7 +11,7 @@ base:
   # 数据源所存储的文件路径
   data_bundle_path: D:\OpenSourceTradePlatform\atspy\rqalpha\bundle
   # 启动的策略文件路径
-  strategy_file: D:\OpenSourceTradePlatform\atspy\rqalpha\strategy\rsrs.py
+  strategy_file: D:\OpenSourceTradePlatform\atspy\rqalpha\strategy\hurst.py
   # 回测起始日期
   start_date: 2006-01-01
   # 回测结束日期(如果是实盘，则忽略该配置)

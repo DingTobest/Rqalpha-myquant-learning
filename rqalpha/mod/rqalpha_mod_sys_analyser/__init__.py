@@ -21,11 +21,11 @@ __config__ = {
     # 当不输出csv/pickle/plot 等内容时，可以通过 record 来决定是否执行该 Mod 的计算逻辑
     "record": True,
     # 如果指定路径，则输出计算后的 pickle 文件
-    "output_file": "D:\\OpenSourceTradePlatform\\atspy\\ATResult\\result.pkl",
+    "output_file": None,
     # 如果指定路径，则输出 report csv 文件
     "report_save_path": "D:\\OpenSourceTradePlatform\\atspy\\cvsResult",
     # 画图
-    'plot': False,
+    'plot': True,
     # 如果指定路径，则输出 plot 对应的图片文件
     'plot_save_file': "D:\\OpenSourceTradePlatform\\atspy\\picResult",
 }
