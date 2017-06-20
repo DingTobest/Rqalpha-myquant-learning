@@ -25,7 +25,7 @@ __config__ = {
     # 如果指定路径，则输出 report csv 文件
     "report_save_path": "D:\\OpenSourceTradePlatform\\atspy\\cvsResult",
     # 画图
-    'plot': True,
+    'plot': False,
     # 如果指定路径，则输出 plot 对应的图片文件
     'plot_save_file': "D:\\OpenSourceTradePlatform\\atspy\\picResult",
 }
