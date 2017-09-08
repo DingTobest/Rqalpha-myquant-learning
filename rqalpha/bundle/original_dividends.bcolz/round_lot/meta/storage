@@ -1,1 +1,1 @@
-{"dflt": 0, "expectedlen": 0, "dtype": "uint32", "cparams": {"shuffle": 1, "quantize": 0, "clevel": 5, "cname": "lz4"}, "chunklen": 4096}
+{"cparams": {"clevel": 5, "shuffle": 1, "cname": "lz4", "quantize": 0}, "expectedlen": 0, "dtype": "uint32", "chunklen": 4096, "dflt": 0}

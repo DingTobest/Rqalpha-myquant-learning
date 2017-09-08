@@ -1,3 +1,5 @@
+# coding=utf-8
+
 import talib
 import numpy as np
 

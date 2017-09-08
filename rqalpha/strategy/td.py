@@ -10,6 +10,7 @@ def init(context):
     context.szzs = "000001.XSHG"
     context.hs300 = "000300.XSHG"
     context.cybz = "399006.XSHE"
+    context.shenzzs = "399001.XSHE"
 
     context.algoInfo = context.hs300
 

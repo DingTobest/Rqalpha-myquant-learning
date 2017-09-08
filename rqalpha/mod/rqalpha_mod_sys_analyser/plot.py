@@ -21,7 +21,7 @@ from rqalpha.utils.i18n import gettext
 
 def plot_result(result_dict, show_windows=True, savefile=None):
     import os
-    from matplotlib import rcParams, gridspec, ticker, image as mpimg
+    from matplotlib import rcParams, gridspec, ticker, image as mpimg, pyplot as plt
     from matplotlib.font_manager import findfont, FontProperties
     import numpy as np
 
@@ -43,11 +43,6 @@ def plot_result(result_dict, show_windows=True, savefile=None):
     if "/matplotlib/" in font:
         use_chinese_fonts = False
         system_log.warn("Missing Chinese fonts. Fallback to English.")
-
-    import matplotlib; matplotlib.use('Qt4Agg')
-    from matplotlib import gridspec
-    import matplotlib.image as mpimg
-    import matplotlib.pyplot as plt
 
     summary = result_dict["summary"]
 
@@ -154,15 +149,16 @@ def plot_result(result_dict, show_windows=True, savefile=None):
     ax.grid(b=True, which='major', linewidth=1)
 
     # plot two lines
-    ax.plot(portfolio["unit_net_value"], label=_(u"strategy"), alpha=1, linewidth=2, color=red)
+    ax.plot(portfolio["unit_net_value"] - 1.0, label=_(u"strategy"), alpha=1, linewidth=2, color=red)
     if benchmark_portfolio is not None:
-        ax.plot(benchmark_portfolio["unit_net_value"], label=_(u"benchmark"), alpha=1, linewidth=2, color=blue)
+        ax.plot(benchmark_portfolio["unit_net_value"] - 1.0, label=_(u"benchmark"), alpha=1, linewidth=2, color=blue)
 
     # plot MaxDD/MaxDDD
-    ax.plot([index[max_dd_end], index[max_dd_start]], [rt[max_dd_end], rt[max_dd_start]],
+    ax.plot([index[max_dd_end], index[max_dd_start]], [rt[max_dd_end] - 1.0, rt[max_dd_start] - 1.0],
             'v', color='Green', markersize=8, alpha=.7, label=_(u"MaxDrawdown"))
     ax.plot([index[max_ddd_start_day], index[max_ddd_end_day]],
-            [rt[max_ddd_start_day], rt[max_ddd_end_day]], 'D', color='Blue', markersize=8, alpha=.7, label=_(u"MaxDDD"))
+            [rt[max_ddd_start_day] - 1.0, rt[max_ddd_end_day] - 1.0], 'D', color='Blue', markersize=8, alpha=.7,
+            label=_(u"MaxDDD"))
 
     # place legend
     leg = plt.legend(loc="best")
@@ -183,11 +179,11 @@ def plot_result(result_dict, show_windows=True, savefile=None):
         leg = plt.legend(loc="best")
         leg.get_frame().set_alpha(0.5)
 
+    if show_windows:
+        plt.show()
+
     if savefile:
         fnmame = savefile
         if os.path.isdir(savefile):
             fnmame = os.path.join(savefile, "{}.png".format(summary["strategy_name"]))
         plt.savefig(fnmame, bbox_inches='tight')
-
-    if show_windows:
-        plt.show()
