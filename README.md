@@ -1,6 +1,8 @@
 # Rqalpha-myquant-learning
 对开源项目Rqalpha的改造，在应用上面更适合个人的应用。学习量化策略，对量化策略进行开发调试。
 
+2017-09-08：更新至Rqalpha版本3.0.6
+
 目前的改造情况：
 
 1.增加ats.main.py，来驱动起回测，使程序可以使用pycharm进行开发调试
