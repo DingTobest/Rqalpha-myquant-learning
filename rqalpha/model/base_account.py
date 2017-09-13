@@ -114,6 +114,14 @@ class BaseAccount(AbstractAccount):
         """
         return self._transaction_cost
 
+    # dingzhi 2017-09-12
+    # 给账户增加现金，用于模拟每月定投的情况
+    def add_cash(self, cash_value):
+        """
+        [float] 总费用
+        """
+        self._total_cash += cash_value
+
     # ------------------------------------ Abandon Property ------------------------------------
 
     @property
