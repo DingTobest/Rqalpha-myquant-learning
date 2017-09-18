@@ -57,7 +57,7 @@ class Environment(object):
     @classmethod
     def get_instance(cls):
         """
-        ·µ»ØÒÑ¾­´´½¨µÄ Environment ¶ÔÏó
+        ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Environment ï¿½ï¿½ï¿½ï¿½
         """
         if Environment._env is None:
             raise RuntimeError(
@@ -164,7 +164,7 @@ class Environment(object):
         return self.data_proxy.instruments(order_book_id)
 
     def get_account_type(self, order_book_id):
-        # Èç¹ûÐÂµÄaccount_type ¿ÉÒÔÍ¨¹ýÖØÐ´¸Ãº¯ÊýÀ´½øÐÐÀ©Õ¹
+        # ï¿½ï¿½ï¿½ï¿½Âµï¿½account_type ï¿½ï¿½ï¿½ï¿½Í¨ï¿½ï¿½ï¿½ï¿½Ð´ï¿½Ãºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¹
         return get_account_type(order_book_id)
 
     def get_account(self, order_book_id):
