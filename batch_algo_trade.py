@@ -3,7 +3,7 @@ import  xdrlib ,sys
 import xlrd
 import os
 import shutil
-import matplotlib; matplotlib.use('Qt4Agg')
+import matplotlib; matplotlib.use('Qt5Agg')
 from matplotlib import gridspec
 import matplotlib.image as mpimg
 import matplotlib.pyplot as plt
@@ -17,8 +17,8 @@ def open_excel(file):
     try:
         data = xlrd.open_workbook(file)
         return data
-    except Exception,e:
-        print str(e)
+    except:
+        print('打开excel文件错误')
 
 # 读取excel文件，生成配置文件和策略脚本文件
 def set_strategy_config(fileName, file="D:\\OpenSourceTradePlatform\\atspy\\AlgoTradeConfig", fileType="xlsx"):
@@ -33,8 +33,8 @@ def set_strategy_config(fileName, file="D:\\OpenSourceTradePlatform\\atspy\\Algo
     if os.path.exists(strategyTemlatePath):
         try:
             shutil.rmtree(strategyTemlatePath)
-        except Exception,e:
-            print str(e)
+        except:
+            print('删除文件夹错误')
             return
 
     os.makedirs(strategyTemlatePath)
@@ -116,7 +116,7 @@ def showAlgoTradeResult(StrategyNameArray, resultPath="D:\\OpenSourceTradePlatfo
 def main():
     configArray = setStrategyConfig("ma20")
     for index in range(len(configArray)):
-        print configArray[index]
+        print(configArray[index])
 
 
 if __name__=="__main__":
