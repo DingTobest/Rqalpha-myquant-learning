@@ -47,6 +47,13 @@ def init_portfolio(env):
             FuturePosition = env.get_position_model(DEFAULT_ACCOUNT_TYPE.FUTURE.name)
             accounts[DEFAULT_ACCOUNT_TYPE.FUTURE.name] = FutureAccount(starting_cash, Positions(FuturePosition))
             total_cash += starting_cash
+        elif account_type == DEFAULT_ACCOUNT_TYPE.FUND.name:
+            if starting_cash == 0:
+                raise RuntimeError(_(u"future starting cash can not be 0, using `--account future 100000`"))
+            FundAccount = env.get_account_model(DEFAULT_ACCOUNT_TYPE.FUND.name)
+            FundPosition = env.get_position_model(DEFAULT_ACCOUNT_TYPE.FUND.name)
+            accounts[DEFAULT_ACCOUNT_TYPE.FUTURE.name] = FundAccount(starting_cash, Positions(FundPosition))
+            total_cash += starting_cash
         else:
             raise NotImplementedError
     return Portfolio(start_date, 1, total_cash, accounts)
