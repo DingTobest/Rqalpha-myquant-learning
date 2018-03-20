@@ -134,6 +134,7 @@ class INSTRUMENT_TYPE(CustomEnum):
 class PERSIST_MODE(CustomEnum):
     ON_CRASH = "ON_CRASH"
     REAL_TIME = "REAL_TIME"
+    ON_NORMAL_EXIT = "ON_NORMAL_EXIT"
 
 
 # noinspection PyPep8Naming
@@ -191,4 +192,4 @@ class CURRENCY(CustomEnum):
 UNDERLYING_SYMBOL_PATTERN = "([a-zA-Z]+)\d+"
 
 NIGHT_TRADING_NS = ["CU", "AL", "ZN", "PB", "SN", "NI", "RB", "HC", "BU", "RU", "AU", "AG", "Y", "M", "A", "B", "P",
-                    "J", "JM", "I", "CF", "SR", "OI", "MA", "ZC", "FG", "RM"]
+                    "J", "JM", "I", "CF", "SR", "OI", "MA", "ZC", "FG", "RM", "CY", "TA"]

@@ -40,12 +40,12 @@ if __name__ == '__main__':
 
     if exec_flag == "singal":
         # 单个执行回测
-        atsmain("D:\\OpenSourceTradePlatform\\atspy\\rqalpha\\config.yml")
+        atsmain("D:\\SmartCloudFuture\\rqmy\\rqalpha\\config.yml")
     elif exec_flag == "batch":
         # 批量执行回测
         batch_exec("ma20")
     elif exec_flag == "download":
         # 下载日线数据
-        main.update_bundle("D:\\OpenSourceTradePlatform\\atspy\\rqalpha")  # 获取回测数据
+        main.update_bundle("D:\\SmartCloudFuture\\rqmy\\rqalpha")  # 获取回测数据
     else:
         print("策略执行错误，未知的执行方式")

@@ -17,7 +17,6 @@
 from decimal import Decimal, getcontext
 
 import six
-import numpy as np
 
 from rqalpha.api.api_base import decorate_api_exc, instruments, cal_style, register_api
 from rqalpha.const import DEFAULT_ACCOUNT_TYPE, EXECUTION_PHASE, SIDE, ORDER_TYPE
@@ -25,6 +24,7 @@ from rqalpha.environment import Environment
 from rqalpha.execution_context import ExecutionContext
 from rqalpha.model.instrument import Instrument
 from rqalpha.model.order import Order, OrderStyle, MarketOrder, LimitOrder
+from rqalpha.utils import is_valid_price
 from rqalpha.utils.arg_checker import apply_rules, verify_that
 # noinspection PyUnresolvedReferences
 from rqalpha.utils.exception import patch_user_exc, RQInvalidArgument
@@ -102,7 +102,7 @@ def order_shares(id_or_ins, amount, price=None, style=None):
     env = Environment.get_instance()
 
     price = env.get_last_price(order_book_id)
-    if np.isnan(price):
+    if not is_valid_price(price):
         user_system_log.warn(
             _(u"Order Creation Failed: [{order_book_id}] No market data").format(order_book_id=order_book_id))
         return
@@ -242,7 +242,7 @@ def order_value(id_or_ins, cash_amount, price=None, style=None):
     env = Environment.get_instance()
 
     price = env.get_last_price(order_book_id)
-    if np.isnan(price):
+    if not is_valid_price(price):
         user_system_log.warn(
             _(u"Order Creation Failed: [{order_book_id}] No market data").format(order_book_id=order_book_id))
         return
@@ -346,7 +346,7 @@ def order_target_value(id_or_ins, cash_amount, price=None, style=None):
 
     style = cal_style(price, style)
     if cash_amount == 0:
-        return _sell_all_stock(order_book_id, position.quantity, style)
+        return _sell_all_stock(order_book_id, position.sellable, style)
 
     return order_value(order_book_id, cash_amount - position.market_value, style=style)
 
@@ -403,7 +403,7 @@ def order_target_percent(id_or_ins, percent, price=None, style=None):
     position = account.positions[order_book_id]
 
     if percent == 0:
-        return _sell_all_stock(order_book_id, position.quantity, style)
+        return _sell_all_stock(order_book_id, position.sellable, style)
 
     return order_value(order_book_id, account.total_value * percent - position.market_value, style=style)
 

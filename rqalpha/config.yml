@@ -7,9 +7,9 @@ whitelist: [base, extra, validator, mod]
 
 base:
   # 数据源所存储的文件路径
-  data_bundle_path: D:\OpenSourceTradePlatform\atspy\rqalpha\bundle
+  data_bundle_path: D:\SmartCloudFuture\rqmy\rqalpha\bundle
   # 启动的策略文件路径
-  strategy_file: D:\OpenSourceTradePlatform\atspy\rqalpha\strategy\talib_test.py
+  strategy_file: D:\SmartCloudFuture\rqmy\rqalpha\strategy\rsrs.py
   # 策略源代码
   source_code: ~
   # 回测起始日期
@@ -35,6 +35,9 @@ base:
     # 如果想设置使用某个账户，只需要增加对应的初始资金即可
     stock: 10000
     future: ~
+  # 设置初始仓位
+  init_positions: {}
+
 
 extra:
   # 选择日期的输出等级，有 `verbose` | `info` | `warning` | `error` 等选项，您可以通过设置 `verbose` 来查看最详细的日志，
@@ -52,6 +55,7 @@ extra:
   dividend_reinvestment: false
   is_hold: false
   locale: zh_Hans_CN
+  logger: []
 
 validator:
   # cash_return_by_stock_delisted: 开启该项，当持仓股票退市时，按照退市价格返还现金

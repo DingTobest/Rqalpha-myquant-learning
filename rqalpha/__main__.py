@@ -19,7 +19,6 @@ import os
 import shutil
 import six
 import click
-import yaml
 from importlib import import_module
 
 from rqalpha.utils.click_helper import Date
@@ -35,6 +34,7 @@ CONTEXT_SETTINGS = {
 
 @click.group(context_settings=CONTEXT_SETTINGS)
 @click.option('-v', '--verbose', count=True)
+@click.help_option('-h', '--help')
 @click.pass_context
 def cli(ctx, verbose):
     ctx.obj["VERBOSE"] = verbose
@@ -91,6 +91,7 @@ def update_bundle(data_bundle_path, locale):
 @click.option('-bm', '--benchmark', 'base__benchmark', type=click.STRING, default=None)
 @click.option('-mm', '--margin-multiplier', 'base__margin_multiplier', type=click.FLOAT)
 @click.option('-a', '--account', 'base__accounts', nargs=2, multiple=True, help="set account type with starting cash")
+@click.option('--position', 'base__init_positions', type=click.STRING, help="set init position")
 @click.option('-fq', '--frequency', 'base__frequency', type=click.Choice(['1d', '1m', 'tick']))
 @click.option('-rt', '--run-type', 'base__run_type', type=click.Choice(['b', 'p', 'r']), default="b")
 @click.option('--resume', 'base__resume_mode', is_flag=True)
@@ -99,6 +100,7 @@ def update_bundle(data_bundle_path, locale):
 @click.option('-l', '--log-level', 'extra__log_level', type=click.Choice(['verbose', 'debug', 'info', 'error', 'none']))
 @click.option('--disable-user-system-log', 'extra__user_system_log_disabled', is_flag=True, help='disable user system log stdout')
 @click.option('--disable-user-log', 'extra__user_log_disabled', is_flag=True, help='disable user log stdout')
+@click.option('--logger', 'extra__logger', nargs=2, multiple=True, help='config logger, e.g. --logger system_log debug')
 @click.option('--locale', 'extra__locale', type=click.Choice(['cn', 'en']), default="cn")
 @click.option('--extra-vars', 'extra__context_vars', type=click.STRING, help="override context vars")
 @click.option("--enable-profiler", "extra__enable_profiler", is_flag=True, help="add line profiler to profile your strategy")
@@ -165,7 +167,7 @@ def generate_config(directory):
     """
     Generate default config file
     """
-    default_config = os.path.join(os.path.dirname(os.path.realpath(__file__)), "default_config.yml")
+    default_config = os.path.join(os.path.dirname(os.path.realpath(__file__)), "config.yml")
     target_config_path = os.path.abspath(os.path.join(directory, 'config.yml'))
     shutil.copy(default_config, target_config_path)
     six.print_("Config file has been generated in", target_config_path)
@@ -248,15 +250,15 @@ def mod(cmd, params):
         user_conf = load_yaml(user_mod_conf_path()) if os.path.exists(user_mod_conf_path()) else {'mod': {}}
 
         if installed_result == 0:
-            # ���Ϊ0����˵����װ�ɹ�
+            # 如果为0，则说明安装成功
             if len(mod_list) == 0:
                 """
-                ��Ҫ�Ƿ��� `pip install -e .` ���ַ�ʽ ���ص��� Mod ʹ�ã���Ҫ������������:
-                1.  `rqalpha mod install -e .` �������ڶ�Ӧ �Զ��� Mod �ĸ�Ŀ¼��
-                2.  �� Mod ������� `setup.py` �ļ�������Ҳ���������� `pip install -e .` ����װ��
-                3.  �� Mod �������밴�� RQAlpha �Ĺ淶�������������������
-                    *   ������ `rqalpha-mod-` ����ͷ������ `rqalpha-mod-xxx-yyy`
-                    *   ��Ӧimport�Ŀ�������Ҫ `rqalpha_mod_` ����ͷ��������Ҫ�Ͱ�����벿��һ�£����� `-` ��Ҫ�滻Ϊ `_`, ���� `rqalpha_mod_xxx_yyy`
+                主要是方便 `pip install -e .` 这种方式 本地调试 Mod 使用，需要满足以下条件:
+                1.  `rqalpha mod install -e .` 命令是在对应 自定义 Mod 的根目录下
+                2.  该 Mod 必须包含 `setup.py` 文件（否则也不能正常的 `pip install -e .` 来安装）
+                3.  该 Mod 包名必须按照 RQAlpha 的规范来命名，具体规则如下
+                    *   必须以 `rqalpha-mod-` 来开头，比如 `rqalpha-mod-xxx-yyy`
+                    *   对应import的库名必须要 `rqalpha_mod_` 来开头，并且需要和包名后半部分一致，但是 `-` 需要替换为 `_`, 比如 `rqalpha_mod_xxx_yyy`
                 """
                 mod_name = _detect_package_name_from_dir()
                 mod_name = mod_name.replace("-", "_").replace("rqalpha_mod_", "")

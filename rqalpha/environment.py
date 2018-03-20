@@ -57,7 +57,7 @@ class Environment(object):
     @classmethod
     def get_instance(cls):
         """
-        �����Ѿ������� Environment ����
+        返回已经创建的 Environment 对象
         """
         if Environment._env is None:
             raise RuntimeError(
@@ -121,6 +121,8 @@ class Environment(object):
         return self._position_model_dict[account_type]
 
     def can_submit_order(self, order):
+        if Environment.get_instance().config.extra.is_hold:
+            return False
         account = self.get_account(order.order_book_id)
         for v in self._frontend_validators:
             if not v.can_submit_order(account, order):
@@ -164,7 +166,7 @@ class Environment(object):
         return self.data_proxy.instruments(order_book_id)
 
     def get_account_type(self, order_book_id):
-        # ����µ�account_type ����ͨ����д�ú�����������չ
+        # 如果新的account_type 可以通过重写该函数来进行扩展
         return get_account_type(order_book_id)
 
     def get_account(self, order_book_id):
