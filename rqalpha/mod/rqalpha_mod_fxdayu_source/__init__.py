@@ -9,8 +9,8 @@ __config__ = {
     "bundle_path": None,
     # quantos
     "quantos_url": "tcp://data.quantos.org:8910",
-    "quantos_user": "15010492066",
-    "quantos_token": "eyJhbGciOiJIUzI1NiJ9.eyJjcmVhdGVfdGltZSI6IjE1MTMwNTA0ODY3MTQiLCJpc3MiOiJhdXRoMCIsImlkIjoiMTUwMTA0OTIwNjYifQ.s_530n20Aelg7-8-1IorTgoa_yp6goImz20hhGIzMGU",
+    "quantos_user": "XXXXXXXX",
+    "quantos_token": "XXXXXXXX",
     # cache
     "enable_cache": True,
     "cache_length": None,
