@@ -7,7 +7,7 @@ def init(context):
     context.hs300 = "000300.XSHG"
     context.cybz = "399006.XSHE"
 
-    context.algoInfo = context.cybz
+    context.algoInfo = context.hs300
 
     context.SHORTPERIOD = 20
 

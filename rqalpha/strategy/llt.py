@@ -3,6 +3,7 @@ from rqalpha.api import *
 import talib
 import copy
 import numpy as np
+import math
 
 
 def init(context):
@@ -11,7 +12,7 @@ def init(context):
     context.cybz = "399006.XSHE"
     context.shenzzs = "399001.XSHE"
 
-    context.LLTD = 50
+    context.LLTD = 60
 
     context.algoInfo = context.szzs
 
@@ -34,38 +35,38 @@ def handle_bar(context, bar_dict):
     prices = history_bars(context.algoInfo, 4, '1d', 'close')
     llt(context, prices)
 
-    # plot("llt", context.LLTArray[-1])
-    # plot("Close", prices[-1])
-
     plot("close", prices[-1])
     plot("llt", context.LLTArray[-1])
 
+    k = math.atan(context.LLTArray[-1] / context.LLTArray[-2] - 1) * 100
+    # k = context.LLTArray[-1] - context.LLTArray[-2]
+    print(str(k))
 
-    # if context.LLTArray[-1] - context.LLTArray[-2] < 0 :
-    #     curPosition = context.portfolio.positions[context.algoInfo].quantity
-    #     if curPosition > 0:
-    #         order_target_value(context.algoInfo, 0)
-    # elif context.LLTArray[-1] - context.LLTArray[-2] > 0 :
-    #     curPosition = context.portfolio.positions[context.algoInfo].quantity
-    #     if curPosition == 0:
-    #         order_target_percent(context.algoInfo, 1)
+    if k < 0:
+        curPosition = context.portfolio.positions[context.algoInfo].quantity
+        if curPosition > 0:
+            order_target_value(context.algoInfo, 0)
+    elif k > 0:
+        curPosition = context.portfolio.positions[context.algoInfo].quantity
+        if curPosition == 0:
+            order_target_percent(context.algoInfo, 1)
 
 
-
-    if context.LLTArray[-1] > prices[-1] and context.LLTArray[-2] < prices[-2] or context.LLTArray[-1] < context.LLTArray[-2]:
-       curPosition = context.portfolio.positions[context.algoInfo].quantity
-       if curPosition > 0:
-           print("-----------------------")
-           print("Sell[LLTArray],", context.LLTArray[-1])
-           print("Sell[prices],", prices[-1])
-           order_target_value(context.algoInfo, 0)
-           print("-----------------------")
-    elif context.LLTArray[-1] < prices[-1] and context.LLTArray[-2] > prices[-2] and context.LLTArray[-1] > context.LLTArray[-2]:
-       curPosition = context.portfolio.positions[context.algoInfo].quantity
-       if curPosition == 0:
-           print("-----------------------")
-           print("Buy[LLTArray],", context.LLTArray[-1])
-           print("Buy[prices],", prices[-1])
-           order_target_percent(context.algoInfo, 1)
-           print("-----------------------")
+    #
+    # if context.LLTArray[-1] > prices[-1] and context.LLTArray[-2] < prices[-2] or context.LLTArray[-1] < context.LLTArray[-2]:
+    #    curPosition = context.portfolio.positions[context.algoInfo].quantity
+    #    if curPosition > 0:
+    #        print("-----------------------")
+    #        print("Sell[LLTArray],", context.LLTArray[-1])
+    #        print("Sell[prices],", prices[-1])
+    #        order_target_value(context.algoInfo, 0)
+    #        print("-----------------------")
+    # elif context.LLTArray[-1] < prices[-1] and context.LLTArray[-2] > prices[-2] and context.LLTArray[-1] > context.LLTArray[-2]:
+    #    curPosition = context.portfolio.positions[context.algoInfo].quantity
+    #    if curPosition == 0:
+    #        print("-----------------------")
+    #        print("Buy[LLTArray],", context.LLTArray[-1])
+    #        print("Buy[prices],", prices[-1])
+    #        order_target_percent(context.algoInfo, 1)
+    #        print("-----------------------")
 

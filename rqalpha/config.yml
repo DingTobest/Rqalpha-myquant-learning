@@ -7,23 +7,23 @@ whitelist: [base, extra, validator, mod]
 
 base:
   # 数据源所存储的文件路径
-  data_bundle_path: D:\SmartCloudFuture\rqmy\rqalpha\bundle
+  data_bundle_path: C:\stockdata\bundle
   # 启动的策略文件路径
-  strategy_file: D:\SmartCloudFuture\rqmy\rqalpha\strategy\rsrs.py
+  strategy_file: D:\SmartCloudFuture\rqmy\rqalpha\strategy\strategy.py
   # 策略源代码
   source_code: ~
   # 回测起始日期
-  start_date: 2006-01-01
+  start_date: 2016-06-01
   # 回测结束日期(如果是实盘，则忽略该配置)
-  end_date: 2017-05-31
+  end_date: 2016-06-05
   # 设置保证金乘数，默认为1
   margin_multiplier: 1
   # 运行类型，`b` 为回测，`p` 为模拟交易, `r` 为实盘交易。
   run_type: b
   # 目前支持 `1d` (日线回测) 和 `1m` (分钟线回测)，如果要进行分钟线，请注意是否拥有对应的数据源，目前开源版本是不提供对应的数据源的。
-  frequency: 1d
+  frequency: 1m
   # Benchmark，如果不设置，默认没有基准参照。
-  benchmark: 000300.XSHG
+  benchmark: 000001.XSHG
   # 在模拟交易和实盘交易中，RQAlpha支持策略的pause && resume，该选项表示开启 resume 功能
   resume_mode: false
   # 在模拟交易和实盘交易中，RQAlpha支持策略的pause && resume，该选项表示开启 persist 功能呢，
@@ -33,7 +33,7 @@ base:
   # 设置策略可交易品种，目前支持 `stock` (股票账户)、`future` (期货账户)，您也可以自行扩展
   accounts:
     # 如果想设置使用某个账户，只需要增加对应的初始资金即可
-    stock: 10000
+    stock: 100000
     future: ~
   # 设置初始仓位
   init_positions: {}

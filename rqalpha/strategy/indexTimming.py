@@ -94,7 +94,7 @@ def buyStocks(context, stock, prices):
         return
 
 def stoploss(context, bar_dict):
-    if context.trend <> 'up':
+    if context.trend != 'up':
         return
 
     if context.positionIndex == 1:
